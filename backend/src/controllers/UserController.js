@@ -1,5 +1,9 @@
 module.exports = {
     async store(request, response) {
-        response.json({message : "Desde controllador"});
+
+        const {name, email, username, password} = request.body;
+
+        response.json(request.body);
+        // response.json({username});
     }
 };
