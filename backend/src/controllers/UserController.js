@@ -1,5 +1,6 @@
 const Sequelize = require("sequelize");
 const { validationResult } = require("express-validator");
+const jwt = require("jsonwebtoken");
 
 const User = require("../Models/User");
 
@@ -35,7 +36,16 @@ module.exports = {
             password : passwordHashed
         });
 
-        response.json(user);
+        const payload = { id: user.id, username: user.username };
+        jwt.sign(
+            payload,
+            process.env.SIGNATURE_TOKEN,
+            { expiresIn: 86400 },
+            (error, token) => {
+                if (error) throw error;
+                return response.json({ token });
+            }
+        );
 
     }
 };
