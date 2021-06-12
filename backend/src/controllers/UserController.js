@@ -9,7 +9,19 @@ const passwordHash = require("./utils/passwordHash");
 module.exports = {
 
     async show(request, response) {
-        response.json({message: "todo bien"});
+        const { username } = request.params;
+
+        const user = await User.findOne({
+            where: { username },
+            attributes: {
+              exclude: ["password", "updatedAt"]
+            }
+        });
+
+        if (!user)
+            return response.status(404).send({ message: "Usuario no encontrado" });
+
+        return response.json(user);
     },
 
 
