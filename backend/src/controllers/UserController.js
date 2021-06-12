@@ -7,6 +7,12 @@ const User = require("../Models/User");
 const passwordHash = require("./utils/passwordHash");
 
 module.exports = {
+
+    async show(request, response) {
+        response.json({message: "todo bien"});
+    },
+
+
     async store(request, response) {
 
         const {name, email, username, password} = request.body;
