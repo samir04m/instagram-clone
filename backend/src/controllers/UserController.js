@@ -3,6 +3,8 @@ const { validationResult } = require("express-validator");
 
 const User = require("../Models/User");
 
+const passwordHash = require("./utils/passwordHash");
+
 module.exports = {
     async store(request, response) {
 
@@ -24,11 +26,13 @@ module.exports = {
               return response.status(400).json({ message: "Este usuario ya esta en uso" });
         }
 
+        const passwordHashed = await passwordHash(password);
+
         user = await User.create({
             name,
             email,
             username,
-            password
+            password : passwordHashed
         });
 
         response.json(user);
