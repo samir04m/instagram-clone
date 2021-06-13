@@ -11,7 +11,9 @@ module.exports = {
       const ext = path.extname(file.originalname);
       const name = path.basename(file.originalname, ext);
 
-      cb(null, `${Date.now()}-${name}${ext}`);
+      cb(null, `${Date.now()}${ext}`);
+      // let name2 = name.replace(" ", "");
+      // cb(null, `${Date.now()}-${name2}${ext}`);
     }
   }),
   limits: {

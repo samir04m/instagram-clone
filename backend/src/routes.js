@@ -8,6 +8,7 @@ const authMiddleware = require("./Middleware/auth");
 
 const UserController =  require("./controllers/UserController");
 const AuthController =  require("./controllers/AuthController");
+const PhotoController =  require("./controllers/PhotoController");
 
 const ValidationsUser = require("./Validations/validationUser");
 const ValidationAuth = require("./Validations/validationAuth");
@@ -20,5 +21,14 @@ routes.put("/users", authMiddleware, ValidationsUser.withoutPassword, UserContro
 routes.put("/password-update", authMiddleware, ValidationsUser.password, UserController.updatePassword);
 
 routes.put("/avatar", authMiddleware, multer(multerConfig).single("file"), UserController.updateAvatar);
+
+// routes.get("/photos/:id", authMiddleware, PhotoController.show);
+routes.post(
+  "/photos",
+  authMiddleware,
+  multer(multerConfig).single("file"),
+  PhotoController.store
+);
+// routes.delete("/photos/:id", authMiddleware, PhotoController.destroy);
 
 module.exports = routes;
