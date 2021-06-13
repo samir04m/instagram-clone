@@ -1,10 +1,12 @@
 const Sequelize = require("sequelize");
 const { validationResult } = require("express-validator");
+const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const User = require("../Models/User");
 
 const passwordHash = require("./utils/passwordHash");
+const passwordCompare = require("./utils/passwordCompare");
 
 module.exports = {
 
@@ -65,5 +67,60 @@ module.exports = {
             }
         );
 
+    },
+
+    async update(req, res) {
+        const { name, email, username, phone, bio } = req.body;
+    
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+    
+        await User.update(
+            {
+                name,
+                email,
+                username,
+                phone,
+                bio
+            },
+            { where: { id: req.userId } }
+        );
+    
+        return res.json({ message: "Actualizado correctamente" });
+    },
+
+    async updatePassword(req, res) {
+        const { password_old, password, password_confirm } = req.body;
+    
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+          return res.status(400).json({ errors: errors.array() });
+        }
+    
+        const user = await User.findByPk(req.userId);
+    
+        if (!(await bcryptjs.compare(password_old, user.password)))
+          return res
+            .status(400)
+            .json({ message: "No coincide la contraseña antigua" });
+    
+        if (password !== password_confirm)
+          return res.status(400).json({ message: "Los passwords no son iguales" });
+    
+        //Hasheando el password
+        const salt = await bcryptjs.genSalt(10);
+        const passwordHash = await bcryptjs.hash(password, salt);
+    
+        await User.update(
+          {
+            password: passwordHash
+          },
+          { where: { id: req.userId } }
+        );
+    
+        return res.json({ message: "Password actualizado" });
     }
+    
 };
