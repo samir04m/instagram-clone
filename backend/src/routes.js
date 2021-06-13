@@ -7,8 +7,12 @@ const routes = Router();
 const authMiddleware = require("./Middleware/auth");
 
 const UserController =  require("./controllers/UserController");
+const AuthController =  require("./controllers/AuthController");
 
-const ValidationsUser = require("./Validations/ValidationUser");
+const ValidationsUser = require("./Validations/validationUser");
+const ValidationAuth = require("./Validations/validationAuth");
+
+routes.post("/auth", ValidationAuth.login, AuthController.login);
 
 routes.get("/users/:username", authMiddleware, UserController.show);
 routes.post("/users", ValidationsUser.withPassword, UserController.store);
