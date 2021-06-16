@@ -9,6 +9,7 @@ const photoRoutes = require("./routes/photoRoutes");
 const likeRoutes = require("./routes/likeRoutes");
 const commentRoutes = require("./routes/commentRoutes");
 const followRoutes = require("./routes/followRoutes");
+const feedRoutes = require("./routes/feedRoutes");
 
 const app = express();
 const PORT = process.env.PORT || 3333;
@@ -26,6 +27,7 @@ app.use("/photos", photoRoutes);
 app.use("/likes", likeRoutes);
 app.use("/comments", commentRoutes);
 app.use("/follows", followRoutes);
+app.use("/feeds", feedRoutes);
 
 
 app.listen(PORT); 
