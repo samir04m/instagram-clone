@@ -7,13 +7,10 @@ const routes = Router();
 const authMiddleware = require("../Middleware/auth");
 const PhotoController =  require("../controllers/PhotoController");
 
-routes.get("/:id", authMiddleware, PhotoController.show);
-routes.post(
-  "/",
-  authMiddleware,
-  multer(multerConfig).single("file"),
-  PhotoController.store
-);
-routes.delete("/:id", authMiddleware, PhotoController.destroy);
+routes.use(authMiddleware);
+
+routes.get("/:id", PhotoController.show);
+routes.post("/", multer(multerConfig).single("file"), PhotoController.store);
+routes.delete("/:id", PhotoController.destroy);
 
 module.exports = routes;

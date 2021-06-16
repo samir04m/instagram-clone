@@ -4,6 +4,8 @@ const routes = Router();
 const authMiddleware = require("../Middleware/auth");
 const LikeController = require("../Controllers/LikeController")
 
-routes.post("/:photo", authMiddleware, LikeController.store);
+routes.use(authMiddleware);
+
+routes.post("/:photo", LikeController.store);
 
 module.exports = routes;
