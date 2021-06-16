@@ -3,7 +3,10 @@ require("./Database");
 const express = require("express");
 const path = require("path"); 
 
-const routes = require("./routes");
+const authRoutes = require("./routes/authRoutes");
+const userRoutes = require("./routes/userRoutes");
+const photoRoutes = require("./routes/photoRoutes");
+const likeRoutes = require("./routes/likeRoutes");
 
 const app = express();
 const PORT = process.env.PORT || 3333;
@@ -14,6 +17,11 @@ app.use(
     "/files",
     express.static(path.resolve(__dirname, "..", "tmp", "uploads"))
 ); // Liberamos a los archivos estáticos
-app.use(routes);
+
+app.use("/auth", authRoutes);
+app.use("/users", userRoutes);
+app.use("/photos", photoRoutes);
+app.use("/likes", likeRoutes);
+
 
 app.listen(PORT); 
