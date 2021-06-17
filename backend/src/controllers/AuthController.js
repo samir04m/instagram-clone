@@ -5,16 +5,16 @@ const jwt = require("jsonwebtoken");
 const User = require("../Models/User");
 
 module.exports = {
-//   async howIam(req, res) {
-//     console.log("Fetching data...");
-//     const user = await User.findByPk(req.userId, {
-//       attributes: ["id", "username", "name", "avatar_url"]
-//     });
+    async howIam(req, res) {
+        console.log("Fetching data...");
+        const user = await User.findByPk(req.userId, {
+            attributes: ["id", "username", "name", "avatar_url"]
+        });
 
-//     req.redis.setex(req.userId, 3600, JSON.stringify(user));
+        req.redis.setex(req.userId, 3600, JSON.stringify(user));
 
-//     return res.json(user);
-//   },
+        return res.json(user);
+    },
 
     async login(req, res) {
 
