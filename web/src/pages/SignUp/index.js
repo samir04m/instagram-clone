@@ -1,6 +1,8 @@
 import React, { useRef, useCallback } from "react";
+import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 import * as Yup from 'yup';
+import api from '../../services/api';
 
 import getValidationErrors from '../../utils/getValidationErrors';
 
@@ -12,6 +14,7 @@ import { Container, Gif, FormContainer, Form, Footer } from './styles';
 import Input from "../../components/input";
 
 const SignUp = () => {
+    const history = useHistory();
     const formRef = useRef(null);
 
     const handleSubmit = useCallback( async (data) => {
@@ -27,6 +30,10 @@ const SignUp = () => {
             });
 
             await schema.validate(data, { abortEarly: false });
+
+            await api.post('/users', data);
+
+            history.push('/signin')
 
         } catch (error) {
             if (error instanceof Yup.ValidationError){
