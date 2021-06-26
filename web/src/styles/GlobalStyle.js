@@ -15,7 +15,8 @@ export default createGlobalStyle`
         -webkit-font-smoothing: antialiased;
     }
     body, input, button {
-        font-family: Arial, sans-serif
+        font-family: Arial, sans-serif;
+        outline: none;
     }
     h1,h2,h3,h4,h5,p {
         margin:0;

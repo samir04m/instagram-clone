@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
+import { Form as UnformWeb } from '@unform/web';
+
 export const Container = styled.div`
   height: 100vh;
   display: flex;
@@ -26,7 +28,7 @@ export const FormContainer = styled.div`
   }
 `;
 
-export const Form = styled.form`
+export const Form = styled(UnformWeb)`
   background: #fff;
   width: 100%;
   border: 1px solid #e6e6e6;
@@ -35,6 +37,11 @@ export const Form = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  > img {
+    width: 100%;
+  }
+
   @media (max-width: 450px) {
     background: transparent;
     border: 0;
@@ -53,27 +60,19 @@ export const Form = styled.form`
       font-size: 12px;
     }
   }
-  input {
+  button {
     width: 100%;
-    margin-bottom: 7px;
-    padding: 10px 8px;
-    font: 400 13.333px Arial;
-    background-color: #fff;
-    border: 1px solid #e6e6e6;
+    padding: 9px 9px;
+    background-color: #3897f0;
+    border: 1px solid #3897f0;
     border-radius: 4px;
-    &.button {
-      padding: 9px 9px;
-      background-color: #3897f0;
-      border: 1px solid #3897f0;
-      border-radius: 4px;
-      margin-top: 20px;
-      font: bold 13.333px Arial;
-      color: #fff;
-      cursor: pointer;
-      outline: 0px;
-      &:hover {
-        background-color: #38ff;
-      }
+    margin-top: 20px;
+    font: bold 13.333px Arial;
+    color: #fff;
+    cursor: pointer;
+    outline: 0px;
+    &:hover {
+      background-color: #38ff;
     }
   }
 `;
