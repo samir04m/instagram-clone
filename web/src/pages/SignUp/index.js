@@ -27,7 +27,7 @@ const SignUp = () => {
                 name: Yup.string().required('Nombre obligatorio'),
                 email: Yup.string().required('Correo obligatorio').email('Correo inválido'),
                 username: Yup.string().required('Username obligatorio'),
-                password: Yup.string().required('Password obligatorio'),
+                password: Yup.string().required('Password obligatorio').min(6, 'El password debe tener mas de 6 caracteres'),
             });
 
             await schema.validate(data, { abortEarly: false });
@@ -45,7 +45,7 @@ const SignUp = () => {
                 return;
             }
 
-            toast.error('Ocurrio un error al registrarte.');
+            toast.error(error.response.data.message);
         }
 
     }, [])  
