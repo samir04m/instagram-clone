@@ -3,6 +3,7 @@ import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 import * as Yup from 'yup';
 import api from '../../services/api';
+import { toast } from "react-toastify";
 
 import getValidationErrors from '../../utils/getValidationErrors';
 
@@ -33,6 +34,8 @@ const SignUp = () => {
 
             await api.post('/users', data);
 
+            toast.success('Te registraste con exito');
+
             history.push('/signin')
 
         } catch (error) {
@@ -41,6 +44,8 @@ const SignUp = () => {
                 formRef.current.setErrors(errors);
                 return;
             }
+
+            toast.error('Ocurrio un error al registrarte.');
         }
 
     }, [])  
